@@ -1,6 +1,40 @@
+"use client"
 import NewsLatterBox from "./NewsLatterBox";
+import React, { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import axios from "axios";
 
 const Contact = () => {
+
+  const [Name, setName] = useState('')
+  const [email, setemail] = useState('')
+  const [message1, setmessage1] = useState('')
+
+  const HandleSend = async (e) => {
+    if (Name==="" && email=="" && message1=="" ){
+      toast.error("Please enter Name, Email and Message ")
+      return;
+    }
+    if (Name==="" ){
+      toast.error("Please enter Name  ")
+      return;
+    }
+     if (email==="" ){
+      toast.error("Please enter Email")
+      return;
+    }
+    if (message1==="" ){
+      toast.error("Please enter Your Message")
+      return;
+    }
+    const response = await axios.post(`https://my-backened-ieloxz.vercel.app/sent`, { Name, email, message1 });
+    toast.success('Ticket is Submited successfully!');
+
+    setemail('')
+    setmessage1('')
+    setName('')
+  }
+
   return (
     <section id="contact" className="overflow-hidden py-16 md:py-20 lg:py-28">
       <div className="container">
@@ -17,61 +51,65 @@ const Contact = () => {
               <p className="mb-12 text-base font-medium text-body-color">
                 Our support team will get back to you ASAP via email.
               </p>
-              <form>
-                <div className="-mx-4 flex flex-wrap">
-                  <div className="w-full px-4 md:w-1/2">
-                    <div className="mb-8">
-                      <label
-                        htmlFor="name"
-                        className="mb-3 block text-sm font-medium text-dark dark:text-white"
-                      >
-                        Your Name
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Enter your name"
-                        className="w-full rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
-                      />
-                    </div>
-                  </div>
-                  <div className="w-full px-4 md:w-1/2">
-                    <div className="mb-8">
-                      <label
-                        htmlFor="email"
-                        className="mb-3 block text-sm font-medium text-dark dark:text-white"
-                      >
-                        Your Email
-                      </label>
-                      <input
-                        type="email"
-                        placeholder="Enter your email"
-                        className="w-full rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
-                      />
-                    </div>
-                  </div>
-                  <div className="w-full px-4">
-                    <div className="mb-8">
-                      <label
-                        htmlFor="message"
-                        className="mb-3 block text-sm font-medium text-dark dark:text-white"
-                      >
-                        Your Message
-                      </label>
-                      <textarea
-                        name="message"
-                        rows={5}
-                        placeholder="Enter your Message"
-                        className="w-full resize-none rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
-                      ></textarea>
-                    </div>
-                  </div>
-                  <div className="w-full px-4">
-                    <button className="rounded-md bg-primary py-4 px-9 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp">
-                      Submit Ticket
-                    </button>
+              <div className="-mx-4 flex flex-wrap">
+                <div className="w-full px-4 md:w-1/2">
+                  <div className="mb-8">
+                    <label
+                      htmlFor="name"
+                      className="mb-3 block text-sm font-medium text-dark dark:text-white"
+                    >
+                      Your Name
+                    </label>
+                    <input
+                      value={Name}
+                      onChange={(e) => setName(e.target.value)}
+                      type="text"
+                      placeholder="Enter your name"
+                      className="w-full rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
+                    />
                   </div>
                 </div>
-              </form>
+                <div className="w-full px-4 md:w-1/2">
+                  <div className="mb-8">
+                    <label
+                      htmlFor="email"
+                      className="mb-3 block text-sm font-medium text-dark dark:text-white"
+                    >
+                      Your Email
+                    </label>
+                    <input
+                      onChange={(e) => setemail(e.target.value)}
+                      value={email}
+                      type="email"
+                      placeholder="Enter your email"
+                      className="w-full rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
+                    />
+                  </div>
+                </div>
+                <div className="w-full px-4">
+                  <div className="mb-8">
+                    <label
+                      htmlFor="message1"
+                      className="mb-3 block text-sm font-medium text-dark dark:text-white"
+                    >
+                      Your message1
+                    </label>
+                    <textarea
+                      name="message1"
+                      onChange={(e) => setmessage1(e.target.value)}
+                      value={message1}
+                      rows={5}
+                      placeholder="Enter your message1"
+                      className="w-full resize-none rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
+                    ></textarea>
+                  </div>
+                </div>
+                <div className="w-full px-4">
+                  <button onClick={HandleSend} className="rounded-md bg-primary py-4 px-9 text-base font-medium text-white transition duration-300 ease-in-out hover:bg-opacity-80 hover:shadow-signUp">
+                    Submit Ticket
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
           <div className="w-full px-4 lg:w-5/12 xl:w-4/12">
@@ -79,6 +117,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
+      <Toaster />
     </section>
   );
 };
