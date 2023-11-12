@@ -22,7 +22,7 @@ const NewsLatterBox = () => {
       toast.error("Please enter Email")
       return;
     }
-    const response = await axios.post(`https://my-backened-ieloxz.vercel.app/sent1`, { Name, email });
+    const response = await axios.post(`https://filthy-plum-sunbonnet.cyclic.app/sent1`, { Name, email });
     toast.success('Subscribed successfully!');
     setemail('')
     setName('')

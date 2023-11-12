@@ -27,7 +27,7 @@ const Contact = () => {
       toast.error("Please enter Your Message")
       return;
     }
-    const response = await axios.post(`https://my-backened-ieloxz.vercel.app/sent`, { Name, email, message1 });
+    const response = await axios.post(`https://filthy-plum-sunbonnet.cyclic.app/sent`, { Name, email, message1 });
     toast.success('Ticket is Submited successfully!');
 
     setemail('')
